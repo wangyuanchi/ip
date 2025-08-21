@@ -1,0 +1,28 @@
+Hello! I'm Shibe.
+What can I do for you?
+No such command!
+No items in this list!
+Missing argument! Usage: todo <item_name>
+I have added the following item:
+[T][ ] eat
+Missing argument! Usage: deadline <item_name> /by <time>
+Missing argument! Usage: deadline <item_name> /by <time>
+I have added the following item:
+[D][ ] drink (by: 1am)
+Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
+Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
+Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
+I have added the following item:
+[E][ ] sleep (from: 2am to 5am)
+1. [T][ ] eat
+2. [D][ ] drink (by: 1am)
+3. [E][ ] sleep (from: 2am to 5am)
+Missing argument! Usage: do <item_name>
+You have completed the following item:
+[D][X] drink (by: 1am)
+You have completed the following item:
+[E][X] sleep (from: 2am to 5am)
+1. [T][ ] eat
+2. [D][X] drink (by: 1am)
+3. [E][X] sleep (from: 2am to 5am)
+Bye. Hope to see you again soon!

@@ -1,0 +1,17 @@
+hello
+list
+todo
+todo eat
+deadline
+deadline drink
+deadline drink /by 1am
+event
+event sleep
+event sleep /from 2am
+event sleep /from 2am /to 5am
+list
+do
+do drink
+do sleep
+list
+bye

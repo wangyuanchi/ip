@@ -15,8 +15,13 @@ public class Item {
         this.done = true;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public String toString() {
-        return this.name;
+        String doneStatus = this.done ? "X" : " ";
+        return "[" + doneStatus + "] " + this.name;
     }
 }

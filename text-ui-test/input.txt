@@ -3,5 +3,8 @@ list
 add
 add eat
 list
+do
+do eat
+list
+do eat
 bye
-Bye. Hope to see you again soon!

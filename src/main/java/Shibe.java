@@ -27,6 +27,15 @@ public class Shibe {
                     todoList.listItems();
                     break;
 
+                case "do":
+                    if (inputArray.length == 1) {
+                        System.out.println("Missing argument! Usage: do <item_name>");
+                    } else {
+                        String response = todoList.findAndDoItem(inputArray[1]);
+                        System.out.println(response);
+                    }
+                    break;
+
                 case "bye":
                     System.out.println("Bye. Hope to see you again soon!");
                     scanner.close();

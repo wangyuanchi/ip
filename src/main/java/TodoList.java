@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class TodoList {
-    private ArrayList<String> items;
+    private ArrayList<Item> items;
 
     public TodoList() {
-        this.items = new ArrayList<String>();
+        this.items = new ArrayList<Item>();
     }
 
-    public void addItem(String item) {
-        this.items.add(item);
-        System.out.println("Added " + item + "!");
+    public void addItem(String itemName) {
+        this.items.add(new Item(itemName, false));
+        System.out.println("Added " + itemName + "!");
     }
 
     public void listItems() {
@@ -19,7 +19,18 @@ public class TodoList {
         }
 
         for (int i = 0; i < this.items.size(); i++) {
-            System.out.println((i + 1) + ". " + this.items.get(i));
+            String doneStatus = this.items.get(i).isDone() ? "X" : " ";
+            System.out.println((i + 1) + ". [" + doneStatus + "] " + this.items.get(i));
         }
+    }
+
+    public String findAndDoItem(String itemName) {
+        for (Item item : items) {
+            if (item.toString().equals(itemName) && !item.isDone()) {
+                item.doItem();
+                return "Completed " + itemName + ".";
+            }
+        }
+        return "No uncompleted " + itemName + " found.";
     }
 }

@@ -4,5 +4,9 @@ No such command!
 All items completed!
 Missing argument! Usage: add <item_name>
 Added eat!
-1. eat
+1. [ ] eat
+Missing argument! Usage: do <item_name>
+Completed eat.
+1. [X] eat
+No uncompleted eat found.
 Bye. Hope to see you again soon!

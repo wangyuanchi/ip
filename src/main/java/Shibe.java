@@ -17,7 +17,7 @@ public class Shibe {
                     scanner.close();
                     return;
                 }
-            } catch (MissingArgumentException e) {
+            } catch (ShibeException e) {
                 System.out.println(e.getMessage());
             }
         }

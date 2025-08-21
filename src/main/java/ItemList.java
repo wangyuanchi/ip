@@ -23,7 +23,7 @@ public class ItemList {
         }
     }
 
-    public boolean runCommand(String input) throws MissingArgumentException {
+    public boolean runCommand(String input) throws ShibeException {
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
 
@@ -85,6 +85,20 @@ public class ItemList {
                 }
                 break;
 
+            case "delete":
+                if (inputArray.length == 1) {
+                    throw new MissingArgumentException("delete <item_index>");
+                } else {
+                    try {
+                        int itemIndex = Integer.parseInt(inputArray[1]);
+                        String response = this.deleteItem(itemIndex);
+                        System.out.println(response);
+                    } catch (NumberFormatException e) {
+                        throw new InvalidArgumentException("<item_index> must be a valid integer");
+                    }
+                }
+                break;
+
             case "bye":
                 System.out.println("Bye. Hope to see you again soon!");
                 return true;
@@ -96,12 +110,27 @@ public class ItemList {
     }
 
     public String findAndDoItem(String itemName) {
-        for (Item item : items) {
+        for (Item item : this.items) {
             if (item.getName().equals(itemName) && !item.isDone()) {
                 item.doItem();
                 return "You have completed the following item:\n" + item;
             }
         }
         return "The specified item was not found or was already completed.";
+    }
+
+    public String deleteItem(int itemIndex) {
+        if (this.items.isEmpty()) {
+            return "There is nothing to delete!";
+        }
+
+        if (itemIndex < 0 || itemIndex > this.items.size() - 1) {
+            return "Invalid item index!";
+        }
+
+        Item item = this.items.get(itemIndex);
+        this.items.remove(itemIndex);
+
+        return "The following item was deleted:\n" + item;
     }
 }

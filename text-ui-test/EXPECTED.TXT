@@ -25,4 +25,11 @@ You have completed the following item:
 1. [T][ ] eat
 2. [D][X] drink (by: 1am)
 3. [E][X] sleep (from: 2am to 5am)
+Missing argument! Usage: delete <item_index>
+Invalid argument! Usage: <item_index> must be a valid integer
+Invalid item index!
+The following item was deleted:
+[T][ ] eat
+1. [D][X] drink (by: 1am)
+2. [E][X] sleep (from: 2am to 5am)
 Bye. Hope to see you again soon!

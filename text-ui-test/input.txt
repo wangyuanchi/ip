@@ -1,3 +1,7 @@
 hello
-hello world
+list
+add
+add eat
+list
 bye
+Bye. Hope to see you again soon!

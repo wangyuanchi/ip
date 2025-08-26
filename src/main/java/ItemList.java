@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ItemList {
     private ArrayList<Item> items;
@@ -10,6 +11,10 @@ public class ItemList {
     public void addItem(Item item) {
         this.items.add(item);
         System.out.println("I have added the following item:\n" + item);
+    }
+
+    public void addItemSilent(Item item) {
+        this.items.add(item);
     }
 
     public void listItems() {
@@ -27,13 +32,17 @@ public class ItemList {
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
 
+        // Expected format for writing to file: command,,id,,name,,done,,optional
         switch (command) {
             case "todo":
                 if (inputArray.length == 1) {
                     throw new MissingArgumentException("todo <item_name>");
                 }
-
-                this.addItem(new Todo(inputArray[1], false));
+                Todo todoItem = new Todo(inputArray[1], false);
+                if (Shibe.writeToFileNewLine(Arrays.asList("todo", todoItem.getID(), todoItem.getName(),
+                        String.valueOf(todoItem.isDone())))) {
+                    this.addItem(todoItem);
+                }
                 break;
 
             case "deadline":
@@ -46,7 +55,11 @@ public class ItemList {
                     throw new MissingArgumentException("deadline <item_name> /by <time>");
                 }
 
-                this.addItem(new Deadline(inputArray[0], false, inputArray[1]));
+                Deadline deadlineItem = new Deadline(inputArray[0], false, inputArray[1]);
+                if (Shibe.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
+                        String.valueOf(deadlineItem.isDone()), deadlineItem.getTime()))) {
+                    this.addItem(deadlineItem);
+                }
                 break;
 
             case "event":
@@ -69,7 +82,11 @@ public class ItemList {
                             "event <item_name> /from <from_time> /to <to_time>");
                 }
 
-                this.addItem(new Event(itemName, false, inputArray[0], inputArray[1]));
+                Event eventItem = new Event(itemName, false, inputArray[0], inputArray[1]);
+                if (Shibe.writeToFileNewLine(Arrays.asList("event", eventItem.getID(), eventItem.getName(),
+                        String.valueOf(eventItem.isDone()), eventItem.getStartTime(), eventItem.getEndTime()))) {
+                    this.addItem(eventItem);
+                }
                 break;
 
             case "list":
@@ -112,8 +129,10 @@ public class ItemList {
     public String findAndDoItem(String itemName) {
         for (Item item : this.items) {
             if (item.getName().equals(itemName) && !item.isDone()) {
-                item.doItem();
-                return "You have completed the following item:\n" + item;
+                if (Shibe.writeToFileDoItem(item.getID())) {
+                    item.doItem();
+                    return "You have completed the following item:\n" + item;
+                }
             }
         }
         return "The specified item was not found or was already completed.";
@@ -124,12 +143,16 @@ public class ItemList {
             return "There is nothing to delete!";
         }
 
+        itemIndex = itemIndex - 1;
+
         if (itemIndex < 0 || itemIndex > this.items.size() - 1) {
             return "Invalid item index!";
         }
 
         Item item = this.items.get(itemIndex);
-        this.items.remove(itemIndex);
+        if (Shibe.writeToFileDeleteItem(item.getID())) {
+            this.items.remove(itemIndex);
+        }
 
         return "The following item was deleted:\n" + item;
     }

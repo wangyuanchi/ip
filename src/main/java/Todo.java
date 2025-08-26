@@ -3,6 +3,10 @@ public class Todo extends Item {
         super(name, done);
     }
 
+    public Todo(String id, String name, boolean done) {
+        super(id, name, done);
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();

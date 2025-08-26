@@ -17,6 +17,6 @@ list
 delete
 delete eat
 delete 10
-delete 0
+delete 1
 list
 bye

@@ -1,8 +1,18 @@
-public class Item {
+import java.util.UUID;
+
+public abstract class Item {
+    private String id;
     private String name;
     private boolean done;
 
     public Item(String name, boolean done) {
+        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.name = name;
+        this.done = done;
+    }
+
+    public Item(String id, String name, boolean done) {
+        this.id = id;
         this.name = name;
         this.done = done;
     }
@@ -17,6 +27,10 @@ public class Item {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getID() {
+        return this.id;
     }
 
     @Override

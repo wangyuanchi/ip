@@ -57,5 +57,11 @@ The following item was deleted:
 1. [D][X] drink (by: 12 December 2025)
 2. [E][ ] drink (from: 12 December 2025 to 13 December 2025)
 ------------------------------
+Missing argument! Usage: find <item_name>
+------------------------------
+Here are the items that matched your item name:
+1. [D][X] drink (by: 12 December 2025)
+2. [E][ ] drink (from: 12 December 2025 to 13 December 2025)
+------------------------------
 Bye. Hope to see you again soon!
 ------------------------------

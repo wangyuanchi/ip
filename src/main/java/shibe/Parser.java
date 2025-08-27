@@ -35,22 +35,19 @@ public class Parser {
 
     public static Event parseToEvent(String[] inputArray) throws MissingArgumentException, InvalidArgumentException {
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         inputArray = inputArray[1].split(" /from ", 2);
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         String itemName = inputArray[0];
 
         inputArray = inputArray[1].split(" /to ", 2);
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         LocalDate fromDate, toDate;
@@ -59,8 +56,7 @@ public class Parser {
             fromDate = LocalDate.parse(inputArray[0]);
             toDate = LocalDate.parse(inputArray[1]);
         } catch (DateTimeParseException e) {
-            throw new InvalidArgumentException(
-                    "<from_date> and <to_date> must be in the following format: yyyy-mm-dd");
+            throw new InvalidArgumentException("<from_date> and <to_date> must be in the following format: yyyy-mm-dd");
         }
 
         return new Event(itemName, false, fromDate, toDate);
@@ -68,7 +64,7 @@ public class Parser {
 
     public static String parseToItemName(String[] inputArray) throws MissingArgumentException {
         if (inputArray.length == 1) {
-            throw new MissingArgumentException("do <item_name>");
+            throw new MissingArgumentException(inputArray[0] + " <item_name>");
         }
         return inputArray[1];
     }

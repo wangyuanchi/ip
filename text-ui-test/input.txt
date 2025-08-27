@@ -21,4 +21,6 @@ delete eat
 delete 10
 delete 1
 list
+find
+find dri
 bye

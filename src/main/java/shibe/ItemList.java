@@ -35,55 +35,83 @@ public class ItemList {
         UI.respond(output);
     }
 
+    /**
+     * Finds all items in the item list that contains the itemName with 1-based
+     * indexing.
+     * 
+     * @param itemName The name of the item to match against.
+     */
+    public void findItems(String itemName) {
+        String output = "";
+        for (int i = 0; i < this.items.size(); i++) {
+            if (this.items.get(i).getName().contains(itemName)) {
+                output += (i + 1) + ". " + this.items.get(i);
+                if (i != this.items.size() - 1) {
+                    output += "\n";
+                }
+            }
+        }
+
+        if (output == "") {
+            UI.respond("No item matched your specified item name.");
+        } else {
+            UI.respond("Here are the items that matched your item name:\n" + output);
+        }
+    }
+
     public boolean runCommand(Writer writer, String input) throws MissingArgumentException, InvalidArgumentException {
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
 
         // Expected format for writing to file: command,,id,,name,,done,,optional
         switch (command) {
-            case Todo.COMMAND:
-                Todo todoItem = Parser.parseToTodo(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("todo", todoItem.getID(), todoItem.getName(),
-                        String.valueOf(todoItem.isDone())))) {
-                    this.addItem(todoItem);
-                }
-                break;
+        case Todo.COMMAND:
+            Todo todoItem = Parser.parseToTodo(inputArray);
+            if (writer.writeToFileNewLine(
+                    Arrays.asList("todo", todoItem.getID(), todoItem.getName(), String.valueOf(todoItem.isDone())))) {
+                this.addItem(todoItem);
+            }
+            break;
 
-            case Deadline.COMMAND:
-                Deadline deadlineItem = Parser.parseToDeadline(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
-                        String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
-                    this.addItem(deadlineItem);
-                }
-                break;
+        case Deadline.COMMAND:
+            Deadline deadlineItem = Parser.parseToDeadline(inputArray);
+            if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
+                    String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
+                this.addItem(deadlineItem);
+            }
+            break;
 
-            case Event.COMMAND:
-                Event eventItem = Parser.parseToEvent(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("event", eventItem.getID(), eventItem.getName(),
-                        String.valueOf(eventItem.isDone()), eventItem.getStartDate().toString(),
-                        eventItem.getEndDate().toString()))) {
-                    this.addItem(eventItem);
-                }
-                break;
+        case Event.COMMAND:
+            Event eventItem = Parser.parseToEvent(inputArray);
+            if (writer.writeToFileNewLine(
+                    Arrays.asList("event", eventItem.getID(), eventItem.getName(), String.valueOf(eventItem.isDone()),
+                            eventItem.getStartDate().toString(), eventItem.getEndDate().toString()))) {
+                this.addItem(eventItem);
+            }
+            break;
 
-            case "list":
-                this.listItems();
-                break;
+        case "list":
+            this.listItems();
+            break;
 
-            case "do":
-                this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
-                break;
+        case "find":
+            this.findItems(Parser.parseToItemName(inputArray));
+            break;
 
-            case "delete":
-                this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
-                break;
+        case "do":
+            this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
+            break;
 
-            case "bye":
-                UI.respond("Bye. Hope to see you again soon!");
-                return true;
+        case "delete":
+            this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
+            break;
 
-            default:
-                UI.respond("No such command!");
+        case "bye":
+            UI.respond("Bye. Hope to see you again soon!");
+            return true;
+
+        default:
+            UI.respond("No such command!");
         }
         return false;
     }

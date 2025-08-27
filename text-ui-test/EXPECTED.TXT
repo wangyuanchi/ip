@@ -5,31 +5,32 @@ No items in this list!
 Missing argument! Usage: todo <item_name>
 I have added the following item:
 [T][ ] eat
-Missing argument! Usage: deadline <item_name> /by <time>
-Missing argument! Usage: deadline <item_name> /by <time>
+Missing argument! Usage: deadline <item_name> /by <date>
+Missing argument! Usage: deadline <item_name> /by <date>
+Invalid argument! Usage: <date> must be in the following format: yyyy-mm-dd
 I have added the following item:
-[D][ ] drink (by: 1am)
-Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
-Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
-Missing argument! Usage: event <item_name> /from <from_time> /to <to_time>
+[D][ ] drink (by: 12 December 2025)
+Missing argument! Usage: event <item_name> /from <from_date> /to <to_date>
+Missing argument! Usage: event <item_name> /from <from_date> /to <to_date>
+Missing argument! Usage: event <item_name> /from <from_date> /to <to_date>
+Invalid argument! Usage: <from_date> and <to_date> must be in the following format: yyyy-mm-dd
 I have added the following item:
-[E][ ] sleep (from: 2am to 5am)
+[E][ ] drink (from: 12 December 2025 to 13 December 2025)
 1. [T][ ] eat
-2. [D][ ] drink (by: 1am)
-3. [E][ ] sleep (from: 2am to 5am)
+2. [D][ ] drink (by: 12 December 2025)
+3. [E][ ] drink (from: 12 December 2025 to 13 December 2025)
 Missing argument! Usage: do <item_name>
 You have completed the following item:
-[D][X] drink (by: 1am)
-You have completed the following item:
-[E][X] sleep (from: 2am to 5am)
+[D][X] drink (by: 12 December 2025)
+The specified item was not found or was already completed.
 1. [T][ ] eat
-2. [D][X] drink (by: 1am)
-3. [E][X] sleep (from: 2am to 5am)
+2. [D][X] drink (by: 12 December 2025)
+3. [E][ ] drink (from: 12 December 2025 to 13 December 2025)
 Missing argument! Usage: delete <item_index>
 Invalid argument! Usage: <item_index> must be a valid integer
 Invalid item index!
 The following item was deleted:
 [T][ ] eat
-1. [D][X] drink (by: 1am)
-2. [E][X] sleep (from: 2am to 5am)
+1. [D][X] drink (by: 12 December 2025)
+2. [E][ ] drink (from: 12 December 2025 to 13 December 2025)
 Bye. Hope to see you again soon!

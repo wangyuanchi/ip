@@ -5,10 +5,12 @@ todo eat
 deadline
 deadline drink
 deadline drink /by 1am
+deadline drink /by 2025-12-12
 event
 event sleep
 event sleep /from 2am
 event sleep /from 2am /to 5am
+event drink /from 2025-12-12 /to 2025-12-13
 list
 do
 do drink

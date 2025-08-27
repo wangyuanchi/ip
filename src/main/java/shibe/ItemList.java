@@ -10,15 +10,29 @@ public class ItemList {
         this.items = new ArrayList<Item>();
     }
 
+    /**
+     * Adds the given item to the item list and responds with a success message.
+     *
+     * @param item The item to add.
+     */
     public void addItem(Item item) {
         this.items.add(item);
         UI.respond("I have added the following item:\n" + item);
     }
 
+    /**
+     * Adds the given item to the item list and does not respond with a success
+     * message.
+     *
+     * @param item The item to add.
+     */
     public void addItemSilent(Item item) {
         this.items.add(item);
     }
 
+    /**
+     * Lists all items in the item list with 1-based indexing.
+     */
     public void listItems() {
         if (this.items.isEmpty()) {
             UI.respond("No items in this list!");
@@ -35,6 +49,18 @@ public class ItemList {
         UI.respond(output);
     }
 
+    /**
+     * Runs a command based on the user input.
+     * Supported commands include todo, deadline, event, list, do, delete and bye.
+     * 
+     * @param writer The writer object used to write data to file.
+     * @param input  The command input from the user.
+     * @return True if the command is the bye command, otherwise false.
+     * @throws MissingArgumentException If an argument is missing based on the
+     *                                  command.
+     * @throws InvalidArgumentException If an argument is invalid based on the
+     *                                  command.
+     */
     public boolean runCommand(Writer writer, String input) throws MissingArgumentException, InvalidArgumentException {
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();

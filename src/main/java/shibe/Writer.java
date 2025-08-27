@@ -16,6 +16,14 @@ public class Writer {
         this.delimiter = delimiter;
     }
 
+    /**
+     * Appends a new line to the text file.
+     * The new line is formed from the lineArray by joining the strings with a
+     * delimiter.
+     *
+     * @param lineArray The array of strings which will be processed.
+     * @return Whether the write was successful or not.
+     */
     public boolean writeToFileNewLine(List<String> lineArray) {
         try {
             FileWriter fw = new FileWriter(this.path, true);
@@ -28,6 +36,12 @@ public class Writer {
         return false;
     }
 
+    /**
+     * Changes the done status of an item to true if the item id exists.
+     *
+     * @param id The id of the item.
+     * @return Whether the change was successful or not.
+     */
     public boolean writeToFileDoItem(String id) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(this.path));
@@ -51,6 +65,12 @@ public class Writer {
         return false;
     }
 
+    /**
+     * Removes all lines where the id of the item matches the id provided.
+     *
+     * @param id The id of the item to remove.
+     * @return Whether the change was successful or not.
+     */
     public boolean writeToFileDeleteItem(String id) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(this.path));

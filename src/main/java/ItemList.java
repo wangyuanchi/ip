@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -47,17 +49,24 @@ public class ItemList {
 
             case "deadline":
                 if (inputArray.length == 1) {
-                    throw new MissingArgumentException("deadline <item_name> /by <time>");
+                    throw new MissingArgumentException("deadline <item_name> /by <date>");
                 }
 
                 inputArray = inputArray[1].split(" /by ", 2);
                 if (inputArray.length == 1) {
-                    throw new MissingArgumentException("deadline <item_name> /by <time>");
+                    throw new MissingArgumentException("deadline <item_name> /by <date>");
                 }
 
-                Deadline deadlineItem = new Deadline(inputArray[0], false, inputArray[1]);
+                LocalDate date;
+                try {
+                    date = LocalDate.parse(inputArray[1]);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidArgumentException("<date> must be in the following format: yyyy-mm-dd");
+                }
+
+                Deadline deadlineItem = new Deadline(inputArray[0], false, date);
                 if (Shibe.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
-                        String.valueOf(deadlineItem.isDone()), deadlineItem.getTime()))) {
+                        String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
                     this.addItem(deadlineItem);
                 }
                 break;
@@ -65,13 +74,13 @@ public class ItemList {
             case "event":
                 if (inputArray.length == 1) {
                     throw new MissingArgumentException(
-                            "event <item_name> /from <from_time> /to <to_time>");
+                            "event <item_name> /from <from_date> /to <to_date>");
                 }
 
                 inputArray = inputArray[1].split(" /from ", 2);
                 if (inputArray.length == 1) {
                     throw new MissingArgumentException(
-                            "event <item_name> /from <from_time> /to <to_time>");
+                            "event <item_name> /from <from_date> /to <to_date>");
                 }
 
                 String itemName = inputArray[0];
@@ -79,12 +88,23 @@ public class ItemList {
                 inputArray = inputArray[1].split(" /to ", 2);
                 if (inputArray.length == 1) {
                     throw new MissingArgumentException(
-                            "event <item_name> /from <from_time> /to <to_time>");
+                            "event <item_name> /from <from_date> /to <to_date>");
                 }
 
-                Event eventItem = new Event(itemName, false, inputArray[0], inputArray[1]);
+                LocalDate fromDate, toDate;
+
+                try {
+                    fromDate = LocalDate.parse(inputArray[0]);
+                    toDate = LocalDate.parse(inputArray[1]);
+                } catch (DateTimeParseException e) {
+                    throw new InvalidArgumentException(
+                            "<from_date> and <to_date> must be in the following format: yyyy-mm-dd");
+                }
+
+                Event eventItem = new Event(itemName, false, fromDate, toDate);
                 if (Shibe.writeToFileNewLine(Arrays.asList("event", eventItem.getID(), eventItem.getName(),
-                        String.valueOf(eventItem.isDone()), eventItem.getStartTime(), eventItem.getEndTime()))) {
+                        String.valueOf(eventItem.isDone()), eventItem.getStartDate().toString(),
+                        eventItem.getEndDate().toString()))) {
                     this.addItem(eventItem);
                 }
                 break;

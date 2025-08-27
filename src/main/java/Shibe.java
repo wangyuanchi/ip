@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -59,6 +60,7 @@ public class Shibe {
             String line = s.nextLine();
 
             // Expected format: command,,id,,name,,done,,optional
+            // Assumes the file is not edited manually
             String[] inputArray = line.split(Shibe.DELIMITER);
 
             switch (inputArray[0]) {
@@ -68,12 +70,12 @@ public class Shibe {
                 case "deadline":
                     itemList.addItemSilent(
                             new Deadline(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
-                                    inputArray[4]));
+                                    LocalDate.parse(inputArray[4])));
                     break;
                 case "event":
                     itemList.addItemSilent(
-                            new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]), inputArray[4],
-                                    inputArray[5]));
+                            new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
+                                    LocalDate.parse(inputArray[4]), LocalDate.parse(inputArray[5])));
             }
         }
 

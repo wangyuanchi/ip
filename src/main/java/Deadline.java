@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Item {
     private LocalDate date;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    public static final String COMMAND = "deadline";
 
     public Deadline(String name, boolean done, LocalDate date) {
         super(name, done);

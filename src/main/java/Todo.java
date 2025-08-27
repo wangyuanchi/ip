@@ -1,4 +1,6 @@
 public class Todo extends Item {
+    public static final String COMMAND = "todo";
+
     public Todo(String name, boolean done) {
         super(name, done);
     }

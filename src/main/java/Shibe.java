@@ -1,49 +1,47 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Shibe {
-    private static final String ITEM_LIST_FILE_PATH = "./data/itemList.txt";
-    private static final String DELIMITER = ",,";
+    private Scanner scanner;
+    private String path;
+    private String delimiter;
+    private Writer writer;
+    private ItemList itemList;
 
-    public static void main(String[] args) {
-        ItemList itemList;
+    public Shibe(String path, String delimiter) {
+        this.scanner = new Scanner(System.in);
+        this.path = path;
+        this.delimiter = delimiter;
+        this.writer = new Writer(path, delimiter);
+    }
 
+    private void run() {
         try {
-            itemList = loadItemList();
+            itemList = this.loadItemList();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Ensure the app has permissions for reading and writing to files.");
+            UI.respond("Ensure the app has permissions for reading and writing to files.");
             return;
         }
 
-        System.out.println("Hello! I'm Shibe.\n" +
-                "What can I do for you?");
-
-        Scanner scanner = new Scanner(System.in);
+        UI.respond("Hello! I'm Shibe.\nWhat can I do for you?");
 
         while (true) {
-            String input = scanner.nextLine();
             try {
-                boolean bye = itemList.runCommand(input);
+                boolean bye = this.itemList.runCommand(this.writer, this.scanner.nextLine());
                 if (bye) {
-                    scanner.close();
+                    this.scanner.close();
                     return;
                 }
             } catch (ShibeException e) {
-                System.out.println(e.getMessage());
+                UI.respond(e.getMessage());
             }
         }
     }
 
-    private static ItemList loadItemList() throws IOException {
-        File f = new File(Shibe.ITEM_LIST_FILE_PATH);
+    private ItemList loadItemList() throws IOException {
+        File f = new File(this.path);
 
         if (!f.getParentFile().exists()) {
             f.getParentFile().mkdirs();
@@ -57,22 +55,19 @@ public class Shibe {
         ItemList itemList = new ItemList();
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
-            String line = s.nextLine();
-
             // Expected format: command,,id,,name,,done,,optional
-            // Assumes the file is not edited manually
-            String[] inputArray = line.split(Shibe.DELIMITER);
+            String[] inputArray = s.nextLine().split(this.delimiter);
 
             switch (inputArray[0]) {
-                case "todo":
+                case Todo.COMMAND:
                     itemList.addItemSilent(new Todo(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3])));
                     break;
-                case "deadline":
+                case Deadline.COMMAND:
                     itemList.addItemSilent(
                             new Deadline(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
                                     LocalDate.parse(inputArray[4])));
                     break;
-                case "event":
+                case Event.COMMAND:
                     itemList.addItemSilent(
                             new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
                                     LocalDate.parse(inputArray[4]), LocalDate.parse(inputArray[5])));
@@ -83,57 +78,7 @@ public class Shibe {
         return itemList;
     }
 
-    public static boolean writeToFileNewLine(List<String> lineArray) {
-        try {
-            FileWriter fw = new FileWriter(Shibe.ITEM_LIST_FILE_PATH, true);
-            fw.write(String.join(Shibe.DELIMITER, lineArray) + System.lineSeparator());
-            fw.close();
-            return true;
-        } catch (IOException e) {
-            System.out.println("Could not write to file!");
-        }
-        return false;
-    }
-
-    public static boolean writeToFileDoItem(String id) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(Shibe.ITEM_LIST_FILE_PATH));
-            List<String> updatedLines = new ArrayList<>();
-
-            for (String line : lines) {
-                if (line.contains(id)) {
-                    String[] lineArray = line.split(Shibe.DELIMITER);
-                    lineArray[3] = "true";
-                    updatedLines.add(String.join(Shibe.DELIMITER, lineArray));
-                } else {
-                    updatedLines.add(line);
-                }
-            }
-
-            Files.write(Paths.get(Shibe.ITEM_LIST_FILE_PATH), updatedLines);
-            return true;
-        } catch (IOException e) {
-            System.out.println("Could not write to file!");
-        }
-        return false;
-    }
-
-    public static boolean writeToFileDeleteItem(String id) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(Shibe.ITEM_LIST_FILE_PATH));
-            List<String> updatedLines = new ArrayList<>();
-
-            for (String line : lines) {
-                if (!line.contains(id)) {
-                    updatedLines.add(line);
-                }
-            }
-
-            Files.write(Paths.get(Shibe.ITEM_LIST_FILE_PATH), updatedLines);
-            return true;
-        } catch (IOException e) {
-            System.out.println("Could not write to file!");
-        }
-        return false;
+    public static void main(String[] args) {
+        new Shibe("./data/itemList.txt", ",,").run();
     }
 }

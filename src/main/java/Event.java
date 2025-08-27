@@ -5,6 +5,7 @@ public class Event extends Item {
     private LocalDate startDate;
     private LocalDate endDate;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    public static final String COMMAND = "event";
 
     public Event(String name, boolean done, LocalDate startDate, LocalDate endDate) {
         super(name, done);

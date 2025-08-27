@@ -17,20 +17,20 @@ public abstract class Item {
         this.done = done;
     }
 
-    public boolean isDone() {
-        return this.done;
-    }
-
     public void doItem() {
         this.done = true;
     }
 
-    public String getName() {
-        return this.name;
+    public boolean isDone() {
+        return this.done;
     }
 
     public String getID() {
         return this.id;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override

@@ -50,8 +50,32 @@ public class ItemList {
     }
 
     /**
-     * Runs a command based on the user input.
-     * Supported commands include todo, deadline, event, list, do, delete and bye.
+     * Finds all items in the item list that contains the itemName with 1-based
+     * indexing.
+     * 
+     * @param itemName The name of the item to match against.
+     */
+    public void findItems(String itemName) {
+        String output = "";
+        for (int i = 0; i < this.items.size(); i++) {
+            if (this.items.get(i).getName().contains(itemName)) {
+                output += (i + 1) + ". " + this.items.get(i);
+                if (i != this.items.size() - 1) {
+                    output += "\n";
+                }
+            }
+        }
+
+        if (output == "") {
+            UI.respond("No item matched your specified item name.");
+        } else {
+            UI.respond("Here are the items that matched your item name:\n" + output);
+        }
+    }
+
+    /**
+     * Runs a command based on the user input. Supported commands include todo,
+     * deadline, event, list, do, delete, find and bye.
      * 
      * @param writer The writer object used to write data to file.
      * @param input  The command input from the user.
@@ -94,6 +118,10 @@ public class ItemList {
 
         case "list":
             this.listItems();
+            break;
+
+        case "find":
+            this.findItems(Parser.parseToItemName(inputArray));
             break;
 
         case "do":

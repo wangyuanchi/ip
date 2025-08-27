@@ -5,8 +5,8 @@ import java.time.format.DateTimeParseException;
 
 public class Parser {
     /**
-     * Creates a todo object based on the given input.
-     * The expected format is ["todo", "<item_name>"].
+     * Creates a todo object based on the given input. The expected format is
+     * ["todo", "<item_name>"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created todo object.
@@ -20,8 +20,8 @@ public class Parser {
     }
 
     /**
-     * Creates a deadline object based on the given input.
-     * The expected format is ["deadline", "<item_name> /by <date>"].
+     * Creates a deadline object based on the given input. The expected format is
+     * ["deadline", "<item_name> /by <date>"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created deadline object.
@@ -51,9 +51,8 @@ public class Parser {
     }
 
     /**
-     * Creates an event object based on the given input.
-     * The expected format is ["event", "<item_name> /from <from_date> /to
-     * <to_date>"].
+     * Creates an event object based on the given input. The expected format is
+     * ["event", "<item_name> /from <from_date> /to <to_date>"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created event object.
@@ -63,22 +62,19 @@ public class Parser {
      */
     public static Event parseToEvent(String[] inputArray) throws MissingArgumentException, InvalidArgumentException {
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         inputArray = inputArray[1].split(" /from ", 2);
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         String itemName = inputArray[0];
 
         inputArray = inputArray[1].split(" /to ", 2);
         if (inputArray.length == 1) {
-            throw new MissingArgumentException(
-                    "event <item_name> /from <from_date> /to <to_date>");
+            throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
         LocalDate fromDate, toDate;
@@ -87,16 +83,15 @@ public class Parser {
             fromDate = LocalDate.parse(inputArray[0]);
             toDate = LocalDate.parse(inputArray[1]);
         } catch (DateTimeParseException e) {
-            throw new InvalidArgumentException(
-                    "<from_date> and <to_date> must be in the following format: yyyy-mm-dd");
+            throw new InvalidArgumentException("<from_date> and <to_date> must be in the following format: yyyy-mm-dd");
         }
 
         return new Event(itemName, false, fromDate, toDate);
     }
 
     /**
-     * Gets the item name from the given input.
-     * The expected format is ["do", "<item_name>"].
+     * Gets the item name from the given input. The expected format is ["<command>",
+     * "<item_name>"].
      *
      * @param inputArray The input from the user.
      * @return Returns the name of the item.
@@ -104,14 +99,14 @@ public class Parser {
      */
     public static String parseToItemName(String[] inputArray) throws MissingArgumentException {
         if (inputArray.length == 1) {
-            throw new MissingArgumentException("do <item_name>");
+            throw new MissingArgumentException(inputArray[0] + " <item_name>");
         }
         return inputArray[1];
     }
 
     /**
-     * Gets the index from the given input.
-     * The expected format is ["delete", "<item_index>"].
+     * Gets the index from the given input. The expected format is ["delete",
+     * "<item_index>"].
      *
      * @param inputArray The input from the user.
      * @return Returns the index specified.

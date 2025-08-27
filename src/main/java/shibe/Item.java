@@ -5,26 +5,26 @@ import java.util.UUID;
 public abstract class Item {
     private String id;
     private String name;
-    private boolean done;
+    private boolean isDone;
 
-    public Item(String name, boolean done) {
+    public Item(String name, boolean isDone) {
         this.id = UUID.randomUUID().toString().substring(0, 8);
         this.name = name;
-        this.done = done;
+        this.isDone = isDone;
     }
 
-    public Item(String id, String name, boolean done) {
+    public Item(String id, String name, boolean isDone) {
         this.id = id;
         this.name = name;
-        this.done = done;
+        this.isDone = isDone;
     }
 
     public void doItem() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public boolean isDone() {
-        return this.done;
+        return this.isDone;
     }
 
     public String getID() {
@@ -37,7 +37,7 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        String doneStatus = this.done ? "X" : " ";
+        String doneStatus = this.isDone ? "X" : " ";
         return "[" + doneStatus + "] " + this.name;
     }
 }

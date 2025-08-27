@@ -9,14 +9,14 @@ public class Event extends Item {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     public static final String COMMAND = "event";
 
-    public Event(String name, boolean done, LocalDate startDate, LocalDate endDate) {
-        super(name, done);
+    public Event(String name, boolean isDone, LocalDate startDate, LocalDate endDate) {
+        super(name, isDone);
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Event(String id, String name, boolean done, LocalDate startDate, LocalDate endDate) {
-        super(id, name, done);
+    public Event(String id, String name, boolean isDone, LocalDate startDate, LocalDate endDate) {
+        super(id, name, isDone);
         this.startDate = startDate;
         this.endDate = endDate;
     }

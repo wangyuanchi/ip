@@ -8,13 +8,13 @@ public class Deadline extends Item {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     public static final String COMMAND = "deadline";
 
-    public Deadline(String name, boolean done, LocalDate date) {
-        super(name, done);
+    public Deadline(String name, boolean isDone, LocalDate date) {
+        super(name, isDone);
         this.date = date;
     }
 
-    public Deadline(String id, String name, boolean done, LocalDate date) {
-        super(id, name, done);
+    public Deadline(String id, String name, boolean isDone, LocalDate date) {
+        super(id, name, isDone);
         this.date = date;
     }
 

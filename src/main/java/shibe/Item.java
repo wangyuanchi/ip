@@ -1,3 +1,5 @@
+package shibe;
+
 import java.util.UUID;
 
 public abstract class Item {

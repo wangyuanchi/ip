@@ -31,8 +31,8 @@ public class Shibe {
 
         while (true) {
             try {
-                boolean bye = this.itemList.runCommand(this.writer, this.scanner.nextLine());
-                if (bye) {
+                boolean isByeCommand = this.itemList.runCommand(this.writer, this.scanner.nextLine());
+                if (isByeCommand) {
                     this.scanner.close();
                     return;
                 }
@@ -61,18 +61,16 @@ public class Shibe {
             String[] inputArray = s.nextLine().split(this.delimiter);
 
             switch (inputArray[0]) {
-                case Todo.COMMAND:
-                    itemList.addItemSilent(new Todo(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3])));
-                    break;
-                case Deadline.COMMAND:
-                    itemList.addItemSilent(
-                            new Deadline(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
-                                    LocalDate.parse(inputArray[4])));
-                    break;
-                case Event.COMMAND:
-                    itemList.addItemSilent(
-                            new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
-                                    LocalDate.parse(inputArray[4]), LocalDate.parse(inputArray[5])));
+            case Todo.COMMAND:
+                itemList.addItemSilent(new Todo(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3])));
+                break;
+            case Deadline.COMMAND:
+                itemList.addItemSilent(new Deadline(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
+                        LocalDate.parse(inputArray[4])));
+                break;
+            case Event.COMMAND:
+                itemList.addItemSilent(new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
+                        LocalDate.parse(inputArray[4]), LocalDate.parse(inputArray[5])));
             }
         }
 

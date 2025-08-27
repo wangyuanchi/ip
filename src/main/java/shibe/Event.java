@@ -13,12 +13,12 @@ public class Event extends Item {
      * Creates a new Event object.
      *
      * @param name      The name of the event.
-     * @param done      The completion status of the event.
+     * @param isDone    The completion status of the event.
      * @param startDate The start date of the event.
      * @param endDate   The end date of the event.
      */
-    public Event(String name, boolean done, LocalDate startDate, LocalDate endDate) {
-        super(name, done);
+    public Event(String name, boolean isDone, LocalDate startDate, LocalDate endDate) {
+        super(name, isDone);
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -28,12 +28,12 @@ public class Event extends Item {
      *
      * @param id        The pre-defined id of the object.
      * @param name      The name of the event.
-     * @param done      The completion status of the event.
+     * @param isDone    The completion status of the event.
      * @param startDate The start date of the event.
      * @param endDate   The end date of the event.
      */
-    public Event(String id, String name, boolean done, LocalDate startDate, LocalDate endDate) {
-        super(id, name, done);
+    public Event(String id, String name, boolean isDone, LocalDate startDate, LocalDate endDate) {
+        super(id, name, isDone);
         this.startDate = startDate;
         this.endDate = endDate;
     }

@@ -6,22 +6,22 @@ public class Todo extends Item {
     /**
      * Creates a new Todo object.
      *
-     * @param name The name of the todo.
-     * @param done The completion status of the todo.
+     * @param name   The name of the todo.
+     * @param isDone The completion status of the todo.
      */
-    public Todo(String name, boolean done) {
-        super(name, done);
+    public Todo(String name, boolean isDone) {
+        super(name, isDone);
     }
 
     /**
      * Creates a new Todo object with a pre-defined id.
      *
-     * @param id   The pre-defined id of the object.
-     * @param name The name of the todo.
-     * @param done The completion status of the todo.
+     * @param id     The pre-defined id of the object.
+     * @param name   The name of the todo.
+     * @param isDone The completion status of the todo.
      */
-    public Todo(String id, String name, boolean done) {
-        super(id, name, done);
+    public Todo(String id, String name, boolean isDone) {
+        super(id, name, isDone);
     }
 
     @Override

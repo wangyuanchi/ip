@@ -11,25 +11,25 @@ public class Deadline extends Item {
     /**
      * Creates a new Deadline object.
      *
-     * @param name The name of the deadline.
-     * @param done The completion status of the deadline.
-     * @param date The date of the deadline.
+     * @param name   The name of the deadline.
+     * @param isDone The completion status of the deadline.
+     * @param date   The date of the deadline.
      */
-    public Deadline(String name, boolean done, LocalDate date) {
-        super(name, done);
+    public Deadline(String name, boolean isDone, LocalDate date) {
+        super(name, isDone);
         this.date = date;
     }
 
     /**
      * Creates a new Deadline object with a pre-defined id.
      *
-     * @param id   The pre-defined id of the object.
-     * @param name The name of the deadline.
-     * @param done The completion status of the deadline.
-     * @param date The date of the deadline.
+     * @param id     The pre-defined id of the object.
+     * @param name   The name of the deadline.
+     * @param isDone The completion status of the deadline.
+     * @param date   The date of the deadline.
      */
-    public Deadline(String id, String name, boolean done, LocalDate date) {
-        super(id, name, done);
+    public Deadline(String id, String name, boolean isDone, LocalDate date) {
+        super(id, name, isDone);
         this.date = date;
     }
 

@@ -67,49 +67,49 @@ public class ItemList {
 
         // Expected format for writing to file: command,,id,,name,,done,,optional
         switch (command) {
-            case Todo.COMMAND:
-                Todo todoItem = Parser.parseToTodo(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("todo", todoItem.getID(), todoItem.getName(),
-                        String.valueOf(todoItem.isDone())))) {
-                    this.addItem(todoItem);
-                }
-                break;
+        case Todo.COMMAND:
+            Todo todoItem = Parser.parseToTodo(inputArray);
+            if (writer.writeToFileNewLine(
+                    Arrays.asList("todo", todoItem.getID(), todoItem.getName(), String.valueOf(todoItem.isDone())))) {
+                this.addItem(todoItem);
+            }
+            break;
 
-            case Deadline.COMMAND:
-                Deadline deadlineItem = Parser.parseToDeadline(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
-                        String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
-                    this.addItem(deadlineItem);
-                }
-                break;
+        case Deadline.COMMAND:
+            Deadline deadlineItem = Parser.parseToDeadline(inputArray);
+            if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
+                    String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
+                this.addItem(deadlineItem);
+            }
+            break;
 
-            case Event.COMMAND:
-                Event eventItem = Parser.parseToEvent(inputArray);
-                if (writer.writeToFileNewLine(Arrays.asList("event", eventItem.getID(), eventItem.getName(),
-                        String.valueOf(eventItem.isDone()), eventItem.getStartDate().toString(),
-                        eventItem.getEndDate().toString()))) {
-                    this.addItem(eventItem);
-                }
-                break;
+        case Event.COMMAND:
+            Event eventItem = Parser.parseToEvent(inputArray);
+            if (writer.writeToFileNewLine(
+                    Arrays.asList("event", eventItem.getID(), eventItem.getName(), String.valueOf(eventItem.isDone()),
+                            eventItem.getStartDate().toString(), eventItem.getEndDate().toString()))) {
+                this.addItem(eventItem);
+            }
+            break;
 
-            case "list":
-                this.listItems();
-                break;
+        case "list":
+            this.listItems();
+            break;
 
-            case "do":
-                this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
-                break;
+        case "do":
+            this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
+            break;
 
-            case "delete":
-                this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
-                break;
+        case "delete":
+            this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
+            break;
 
-            case "bye":
-                UI.respond("Bye. Hope to see you again soon!");
-                return true;
+        case "bye":
+            UI.respond("Bye. Hope to see you again soon!");
+            return true;
 
-            default:
-                UI.respond("No such command!");
+        default:
+            UI.respond("No such command!");
         }
         return false;
     }

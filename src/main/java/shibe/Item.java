@@ -27,7 +27,7 @@ public abstract class Item {
         return this.isDone;
     }
 
-    public String getID() {
+    public String getId() {
         return this.id;
     }
 

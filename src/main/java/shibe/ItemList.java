@@ -17,7 +17,7 @@ public class ItemList {
      */
     public void addItem(Item item) {
         this.items.add(item);
-        UI.respond("I have added the following item:\n" + item);
+        Ui.respond("I have added the following item:\n" + item);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ItemList {
      */
     public void listItems() {
         if (this.items.isEmpty()) {
-            UI.respond("No items in this list!");
+            Ui.respond("No items in this list!");
             return;
         }
 
@@ -46,7 +46,7 @@ public class ItemList {
                 output += "\n";
             }
         }
-        UI.respond(output);
+        Ui.respond(output);
     }
 
     /**
@@ -67,9 +67,9 @@ public class ItemList {
         }
 
         if (output == "") {
-            UI.respond("No item matched your specified item name.");
+            Ui.respond("No item matched your specified item name.");
         } else {
-            UI.respond("Here are the items that matched your item name:\n" + output);
+            Ui.respond("Here are the items that matched your item name:\n" + output);
         }
     }
 
@@ -94,14 +94,14 @@ public class ItemList {
         case Todo.COMMAND:
             Todo todoItem = Parser.parseToTodo(inputArray);
             if (writer.writeToFileNewLine(
-                    Arrays.asList("todo", todoItem.getID(), todoItem.getName(), String.valueOf(todoItem.isDone())))) {
+                    Arrays.asList("todo", todoItem.getId(), todoItem.getName(), String.valueOf(todoItem.isDone())))) {
                 this.addItem(todoItem);
             }
             break;
 
         case Deadline.COMMAND:
             Deadline deadlineItem = Parser.parseToDeadline(inputArray);
-            if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getID(), deadlineItem.getName(),
+            if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getId(), deadlineItem.getName(),
                     String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
                 this.addItem(deadlineItem);
             }
@@ -110,7 +110,7 @@ public class ItemList {
         case Event.COMMAND:
             Event eventItem = Parser.parseToEvent(inputArray);
             if (writer.writeToFileNewLine(
-                    Arrays.asList("event", eventItem.getID(), eventItem.getName(), String.valueOf(eventItem.isDone()),
+                    Arrays.asList("event", eventItem.getId(), eventItem.getName(), String.valueOf(eventItem.isDone()),
                             eventItem.getStartDate().toString(), eventItem.getEndDate().toString()))) {
                 this.addItem(eventItem);
             }
@@ -133,11 +133,11 @@ public class ItemList {
             break;
 
         case "bye":
-            UI.respond("Bye. Hope to see you again soon!");
+            Ui.respond("Bye. Hope to see you again soon!");
             return true;
 
         default:
-            UI.respond("No such command!");
+            Ui.respond("No such command!");
         }
         return false;
     }
@@ -145,34 +145,34 @@ public class ItemList {
     public void findAndDoItem(Writer writer, String itemName) {
         for (Item item : this.items) {
             if (item.getName().equals(itemName) && !item.isDone()) {
-                if (writer.writeToFileDoItem(item.getID())) {
+                if (writer.writeToFileDoItem(item.getId())) {
                     item.doItem();
-                    UI.respond("You have completed the following item:\n" + item);
+                    Ui.respond("You have completed the following item:\n" + item);
                     return;
                 }
             }
         }
-        UI.respond("The specified item was not found or was already completed.");
+        Ui.respond("The specified item was not found or was already completed.");
     }
 
     public void deleteItem(Writer writer, int itemIndex) {
         if (this.items.isEmpty()) {
-            UI.respond("There is nothing to delete!");
+            Ui.respond("There is nothing to delete!");
             return;
         }
 
         itemIndex = itemIndex - 1;
 
         if (itemIndex < 0 || itemIndex > this.items.size() - 1) {
-            UI.respond("Invalid item index!");
+            Ui.respond("Invalid item index!");
             return;
         }
 
         Item item = this.items.get(itemIndex);
-        if (writer.writeToFileDeleteItem(item.getID())) {
+        if (writer.writeToFileDeleteItem(item.getId())) {
             this.items.remove(itemIndex);
         }
 
-        UI.respond("The following item was deleted:\n" + item);
+        Ui.respond("The following item was deleted:\n" + item);
     }
 }

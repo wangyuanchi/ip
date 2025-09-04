@@ -17,9 +17,8 @@ public class Writer {
     }
 
     /**
-     * Appends a new line to the text file.
-     * The new line is formed from the lineArray by joining the strings with a
-     * delimiter.
+     * Appends a new line to the text file. The new line is formed from the
+     * lineArray by joining the strings with a delimiter.
      *
      * @param lineArray The array of strings which will be processed.
      * @return Whether the write was successful or not.
@@ -31,7 +30,7 @@ public class Writer {
             fw.close();
             return true;
         } catch (IOException e) {
-            UI.respond("Could not write to file!");
+            Ui.respond("Could not write to file!");
         }
         return false;
     }
@@ -60,7 +59,7 @@ public class Writer {
             Files.write(Paths.get(this.path), updatedLines);
             return true;
         } catch (IOException e) {
-            UI.respond("Could not write to file!");
+            Ui.respond("Could not write to file!");
         }
         return false;
     }
@@ -85,7 +84,7 @@ public class Writer {
             Files.write(Paths.get(this.path), updatedLines);
             return true;
         } catch (IOException e) {
-            UI.respond("Could not write to file!");
+            Ui.respond("Could not write to file!");
         }
         return false;
     }

@@ -23,11 +23,11 @@ public class Shibe {
         try {
             itemList = this.loadItemList();
         } catch (IOException e) {
-            UI.respond("Ensure the app has permissions for reading and writing to files.");
+            Ui.respond("Ensure the app has permissions for reading and writing to files.");
             return;
         }
 
-        UI.respond("Hello! I'm Shibe.\nWhat can I do for you?");
+        Ui.respond("Hello! I'm Shibe.\nWhat can I do for you?");
 
         while (true) {
             try {
@@ -37,7 +37,7 @@ public class Shibe {
                     return;
                 }
             } catch (ShibeException e) {
-                UI.respond(e.getMessage());
+                Ui.respond(e.getMessage());
             }
         }
     }

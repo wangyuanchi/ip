@@ -6,39 +6,26 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Shibe {
-    private Scanner scanner;
     private String path;
     private String delimiter;
     private Writer writer;
     private ItemList itemList;
 
     public Shibe(String path, String delimiter) {
-        this.scanner = new Scanner(System.in);
         this.path = path;
         this.delimiter = delimiter;
         this.writer = new Writer(path, delimiter);
     }
 
-    private void run() {
+    public void run() throws IOException {
+        itemList = this.loadItemList();
+    }
+
+    public String getResponse(String command) {
         try {
-            itemList = this.loadItemList();
-        } catch (IOException e) {
-            Ui.respond("Ensure the app has permissions for reading and writing to files.");
-            return;
-        }
-
-        Ui.respond("Hello! I'm Shibe.\nWhat can I do for you?");
-
-        while (true) {
-            try {
-                boolean isByeCommand = this.itemList.runCommand(this.writer, this.scanner.nextLine());
-                if (isByeCommand) {
-                    this.scanner.close();
-                    return;
-                }
-            } catch (ShibeException e) {
-                Ui.respond(e.getMessage());
-            }
+            return this.itemList.runCommand(this.writer, command);
+        } catch (ShibeException e) {
+            return Ui.formatResponse(e.getMessage());
         }
     }
 
@@ -79,9 +66,5 @@ public class Shibe {
 
         s.close();
         return itemList;
-    }
-
-    public static void main(String[] args) {
-        new Shibe("./data/itemList.txt", ",,").run();
     }
 }

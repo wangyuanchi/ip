@@ -8,12 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import shibe.Shibe;
+
 /**
  * A GUI for Shibe using FXML.
  */
 public class Main extends Application {
 
-    private Shibe shibe = new Shibe();
+    private Shibe shibe = new Shibe("./data/itemList.txt", ",,");
 
     @Override
     public void start(Stage stage) {
@@ -24,6 +26,8 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             fxmlLoader.<MainWindow>getController().setShibe(shibe);
+            this.shibe.run();
+            fxmlLoader.<MainWindow>getController().displayShibeDialog("Hello!");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

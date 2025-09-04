@@ -1,5 +1,6 @@
 package app;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
+import shibe.Shibe;
 
 /**
  * Controller for the main GUI.
@@ -48,5 +51,13 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
                 DialogBox.getShibeDialog(response, shibeImage));
         userInput.clear();
+
+        if (input.equalsIgnoreCase("bye")) {
+            Platform.exit();
+        }
+    }
+
+    public void displayShibeDialog(String message) {
+        dialogContainer.getChildren().addAll(DialogBox.getShibeDialog(message, shibeImage));
     }
 }

@@ -1,5 +1,6 @@
 package shibe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,10 +15,11 @@ public class ItemList {
      * Adds the given item to the item list and responds with a success message.
      *
      * @param item The item to add.
+     * @return The information of the added item.
      */
-    public void addItem(Item item) {
+    public String addItem(Item item) {
         this.items.add(item);
-        Ui.respond("I have added the following item:\n" + item);
+        return Ui.formatResponse("I have added the following item:\n" + item);
     }
 
     /**
@@ -32,11 +34,12 @@ public class ItemList {
 
     /**
      * Lists all items in the item list with 1-based indexing.
+     * 
+     * @return The string representation of the item list.
      */
-    public void listItems() {
+    public String listItems() {
         if (this.items.isEmpty()) {
-            Ui.respond("No items in this list!");
-            return;
+            return Ui.formatResponse("No items in this list!");
         }
 
         String output = "";
@@ -46,7 +49,7 @@ public class ItemList {
                 output += "\n";
             }
         }
-        Ui.respond(output);
+        return Ui.formatResponse(output);
     }
 
     /**
@@ -54,8 +57,9 @@ public class ItemList {
      * indexing.
      *
      * @param itemName The name of the item to match against.
+     * @return The string representation of the items found.
      */
-    public void findItems(String itemName) {
+    public String findItems(String itemName) {
         String output = "";
         for (int i = 0; i < this.items.size(); i++) {
             if (this.items.get(i).getName().contains(itemName)) {
@@ -67,9 +71,9 @@ public class ItemList {
         }
 
         if (output == "") {
-            Ui.respond("No item matched your specified item name.");
+            return Ui.formatResponse("No item matched your specified item name.");
         } else {
-            Ui.respond("Here are the items that matched your item name:\n" + output);
+            return Ui.formatResponse("Here are the items that matched your item name:\n" + output);
         }
     }
 
@@ -79,13 +83,13 @@ public class ItemList {
      *
      * @param writer The writer object used to write data to file.
      * @param input  The command input from the user.
-     * @return True if the command is the bye command, otherwise false.
+     * @return The response to the command.
      * @throws MissingArgumentException If an argument is missing based on the
      *                                  command.
      * @throws InvalidArgumentException If an argument is invalid based on the
      *                                  command.
      */
-    public boolean runCommand(Writer writer, String input) throws MissingArgumentException, InvalidArgumentException {
+    public String runCommand(Writer writer, String input) throws MissingArgumentException, InvalidArgumentException {
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
 
@@ -93,86 +97,92 @@ public class ItemList {
         switch (command) {
         case Todo.COMMAND:
             Todo todoItem = Parser.parseToTodo(inputArray);
-            if (writer.writeToFileNewLine(
-                    Arrays.asList("todo", todoItem.getId(), todoItem.getName(), String.valueOf(todoItem.isDone())))) {
-                this.addItem(todoItem);
+            try {
+                writer.writeToFileNewLine(
+                        Arrays.asList("todo", todoItem.getId(), todoItem.getName(), String.valueOf(todoItem.isDone())));
+                return this.addItem(todoItem);
+            } catch (IOException e) {
+                return Ui.formatResponse("Could not write to file!");
             }
-            break;
 
         case Deadline.COMMAND:
             Deadline deadlineItem = Parser.parseToDeadline(inputArray);
-            if (writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getId(), deadlineItem.getName(),
-                    String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()))) {
-                this.addItem(deadlineItem);
+            try {
+                writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getId(), deadlineItem.getName(),
+                        String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()));
+                return this.addItem(deadlineItem);
+            } catch (IOException e) {
+                return Ui.formatResponse("Could not write to file!");
             }
-            break;
 
         case Event.COMMAND:
             Event eventItem = Parser.parseToEvent(inputArray);
-            if (writer.writeToFileNewLine(
-                    Arrays.asList("event", eventItem.getId(), eventItem.getName(), String.valueOf(eventItem.isDone()),
-                            eventItem.getStartDate().toString(), eventItem.getEndDate().toString()))) {
-                this.addItem(eventItem);
+            try {
+                writer.writeToFileNewLine(Arrays.asList("event", eventItem.getId(), eventItem.getName(),
+                        String.valueOf(eventItem.isDone()), eventItem.getStartDate().toString(),
+                        eventItem.getEndDate().toString()));
+                return this.addItem(eventItem);
+            } catch (IOException e) {
+                return Ui.formatResponse("Could not write to file!");
             }
-            break;
 
         case "list":
-            this.listItems();
-            break;
+            return this.listItems();
 
         case "find":
-            this.findItems(Parser.parseToItemName(inputArray));
-            break;
+            return this.findItems(Parser.parseToItemName(inputArray));
 
         case "do":
-            this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
-            break;
+            return this.findAndDoItem(writer, Parser.parseToItemName(inputArray));
 
         case "delete":
-            this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
-            break;
+            return this.deleteItem(writer, Parser.parseToValidIndex(inputArray));
 
         case "bye":
-            Ui.respond("Bye. Hope to see you again soon!");
-            return true;
+            return Ui.formatResponse("Bye. Hope to see you again soon!");
 
         default:
-            Ui.respond("No such command!");
+            return Ui.formatResponse("No such command!");
         }
-        return false;
     }
 
-    public void findAndDoItem(Writer writer, String itemName) {
+    public String findAndDoItem(Writer writer, String itemName) {
         for (Item item : this.items) {
             if (item.getName().equals(itemName) && !item.isDone()) {
-                if (writer.writeToFileDoItem(item.getId())) {
-                    item.doItem();
-                    Ui.respond("You have completed the following item:\n" + item);
-                    return;
+                try {
+                    writer.writeToFileDoItem(item.getId());
+                } catch (IOException e) {
+                    return Ui.formatResponse("Could not write to file!");
                 }
+
+                item.doItem();
+                return Ui.formatResponse("You have completed the following item:\n" + item);
+
             }
         }
-        Ui.respond("The specified item was not found or was already completed.");
+        return Ui.formatResponse("The specified item was not found or was already completed.");
     }
 
-    public void deleteItem(Writer writer, int itemIndex) {
+    public String deleteItem(Writer writer, int itemIndex) {
         if (this.items.isEmpty()) {
-            Ui.respond("There is nothing to delete!");
-            return;
+            return Ui.formatResponse("There is nothing to delete!");
         }
 
         itemIndex = itemIndex - 1;
 
         if (itemIndex < 0 || itemIndex > this.items.size() - 1) {
-            Ui.respond("Invalid item index!");
-            return;
+            return Ui.formatResponse("Invalid item index!");
         }
 
         Item item = this.items.get(itemIndex);
-        if (writer.writeToFileDeleteItem(item.getId())) {
-            this.items.remove(itemIndex);
+
+        try {
+            writer.writeToFileDeleteItem(item.getId());
+        } catch (IOException e) {
+            return Ui.formatResponse("Could not write to file!");
         }
 
-        Ui.respond("The following item was deleted:\n" + item);
+        this.items.remove(itemIndex);
+        return Ui.formatResponse("The following item was deleted:\n" + item);
     }
 }

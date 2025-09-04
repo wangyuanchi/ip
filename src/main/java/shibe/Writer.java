@@ -21,71 +21,50 @@ public class Writer {
      * lineArray by joining the strings with a delimiter.
      *
      * @param lineArray The array of strings which will be processed.
-     * @return Whether the write was successful or not.
      */
-    public boolean writeToFileNewLine(List<String> lineArray) {
-        try {
-            FileWriter fw = new FileWriter(this.path, true);
-            fw.write(String.join(this.delimiter, lineArray) + "\n");
-            fw.close();
-            return true;
-        } catch (IOException e) {
-            Ui.respond("Could not write to file!");
-        }
-        return false;
+    public void writeToFileNewLine(List<String> lineArray) throws IOException {
+        FileWriter fw = new FileWriter(this.path, true);
+        fw.write(String.join(this.delimiter, lineArray) + "\n");
+        fw.close();
     }
 
     /**
      * Changes the done status of an item to true if the item id exists.
      *
      * @param id The id of the item.
-     * @return Whether the change was successful or not.
      */
-    public boolean writeToFileDoItem(String id) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(this.path));
-            List<String> updatedLines = new ArrayList<>();
+    public void writeToFileDoItem(String id) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(this.path));
+        List<String> updatedLines = new ArrayList<>();
 
-            for (String line : lines) {
-                if (line.contains(id)) {
-                    String[] lineArray = line.split(this.delimiter);
-                    lineArray[3] = "true";
-                    updatedLines.add(String.join(this.delimiter, lineArray));
-                } else {
-                    updatedLines.add(line);
-                }
+        for (String line : lines) {
+            if (line.contains(id)) {
+                String[] lineArray = line.split(this.delimiter);
+                lineArray[3] = "true";
+                updatedLines.add(String.join(this.delimiter, lineArray));
+            } else {
+                updatedLines.add(line);
             }
-
-            Files.write(Paths.get(this.path), updatedLines);
-            return true;
-        } catch (IOException e) {
-            Ui.respond("Could not write to file!");
         }
-        return false;
+
+        Files.write(Paths.get(this.path), updatedLines);
     }
 
     /**
      * Removes all lines where the id of the item matches the id provided.
      *
      * @param id The id of the item to remove.
-     * @return Whether the change was successful or not.
      */
-    public boolean writeToFileDeleteItem(String id) {
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(this.path));
-            List<String> updatedLines = new ArrayList<>();
+    public void writeToFileDeleteItem(String id) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(this.path));
+        List<String> updatedLines = new ArrayList<>();
 
-            for (String line : lines) {
-                if (!line.contains(id)) {
-                    updatedLines.add(line);
-                }
+        for (String line : lines) {
+            if (!line.contains(id)) {
+                updatedLines.add(line);
             }
-
-            Files.write(Paths.get(this.path), updatedLines);
-            return true;
-        } catch (IOException e) {
-            Ui.respond("Could not write to file!");
         }
-        return false;
+
+        Files.write(Paths.get(this.path), updatedLines);
     }
 }

@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Item {
+    public static final String COMMAND = "event";
+
     private LocalDate startDate;
     private LocalDate endDate;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    public static final String COMMAND = "event";
 
     /**
      * Creates a new Event object.

@@ -52,7 +52,7 @@ public class ItemList {
     /**
      * Finds all items in the item list that contains the itemName with 1-based
      * indexing.
-     * 
+     *
      * @param itemName The name of the item to match against.
      */
     public void findItems(String itemName) {
@@ -76,7 +76,7 @@ public class ItemList {
     /**
      * Runs a command based on the user input. Supported commands include todo,
      * deadline, event, list, do, delete, find and bye.
-     * 
+     *
      * @param writer The writer object used to write data to file.
      * @param input  The command input from the user.
      * @return True if the command is the bye command, otherwise false.

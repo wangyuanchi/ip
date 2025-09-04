@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Item {
+    public static final String COMMAND = "deadline";
     private LocalDate date;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    public static final String COMMAND = "deadline";
 
     /**
      * Creates a new Deadline object.

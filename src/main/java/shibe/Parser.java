@@ -6,11 +6,11 @@ import java.time.format.DateTimeParseException;
 public class Parser {
     /**
      * Creates a todo object based on the given input. The expected format is
-     * ["todo", "<item_name>"].
+     * ["todo", "{@code item_name}"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created todo object.
-     * @throws MissingArgumentException If <item_name> is missing.
+     * @throws MissingArgumentException If {@code item_name} is missing.
      */
     public static Todo parseToTodo(String[] inputArray) throws MissingArgumentException {
         if (inputArray.length == 1) {
@@ -21,12 +21,13 @@ public class Parser {
 
     /**
      * Creates a deadline object based on the given input. The expected format is
-     * ["deadline", "<item_name> /by <date>"].
+     * ["deadline", "{@code item_name} /by {@code date}"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created deadline object.
-     * @throws MissingArgumentException If <item_name> is missing.
-     * @throws InvalidArgumentException If <date> is not of the format yyyy-mm-dd.
+     * @throws MissingArgumentException If {@code item_name} is missing.
+     * @throws InvalidArgumentException If {@code date} is not of the format
+     *                                  yyyy-mm-dd.
      */
     public static Deadline parseToDeadline(String[] inputArray)
             throws MissingArgumentException, InvalidArgumentException {
@@ -52,13 +53,13 @@ public class Parser {
 
     /**
      * Creates an event object based on the given input. The expected format is
-     * ["event", "<item_name> /from <from_date> /to <to_date>"].
+     * ["event", "{@code item_name} /from {@code from_date} /to {@code to_date}"].
      *
      * @param inputArray The input from the user.
      * @return Returns the created event object.
-     * @throws MissingArgumentException If <item_name> is missing.
-     * @throws InvalidArgumentException If <from_date> or <to_date> is not of the
-     *                                  format yyyy-mm-dd.
+     * @throws MissingArgumentException If {@code item_name} is missing.
+     * @throws InvalidArgumentException If {@code from_date} or {@code to_date} is
+     *                                  not of the format yyyy-mm-dd.
      */
     public static Event parseToEvent(String[] inputArray) throws MissingArgumentException, InvalidArgumentException {
         if (inputArray.length == 1) {
@@ -77,7 +78,8 @@ public class Parser {
             throw new MissingArgumentException("event <item_name> /from <from_date> /to <to_date>");
         }
 
-        LocalDate fromDate, toDate;
+        LocalDate fromDate;
+        LocalDate toDate;
 
         try {
             fromDate = LocalDate.parse(inputArray[0]);
@@ -90,12 +92,12 @@ public class Parser {
     }
 
     /**
-     * Gets the item name from the given input. The expected format is ["<command>",
-     * "<item_name>"].
+     * Gets the item name from the given input. The expected format is
+     * ["{@code command}", "{@code item_name}"].
      *
      * @param inputArray The input from the user.
      * @return Returns the name of the item.
-     * @throws MissingArgumentException If <item_name> is missing.
+     * @throws MissingArgumentException If {@code item_name} is missing.
      */
     public static String parseToItemName(String[] inputArray) throws MissingArgumentException {
         if (inputArray.length == 1) {
@@ -106,13 +108,13 @@ public class Parser {
 
     /**
      * Gets the index from the given input. The expected format is ["delete",
-     * "<item_index>"].
+     * "{@code item_index}"].
      *
      * @param inputArray The input from the user.
      * @return Returns the index specified.
-     * @throws MissingArgumentException If <item_index> is missing.
-     * @throws InvalidArgumentException If <item_index> cannot be parsed into a
-     *                                  valid integer.
+     * @throws MissingArgumentException If {@code item_index} is missing.
+     * @throws InvalidArgumentException If {@code item_index} cannot be parsed into
+     *                                  a valid integer.
      */
     public static int parseToValidIndex(String[] inputArray) throws MissingArgumentException, InvalidArgumentException {
         if (inputArray.length == 1) {

@@ -1,12 +1,12 @@
 package shibe;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
 
 public class ItemListTest {
     @Test
@@ -34,10 +34,10 @@ public class ItemListTest {
 
         items.listItems();
 
-        assertEquals("1. [T][ ] Task 1\n" +
-                "2. [T][X] Task 2\n" +
-                "3. [E][X] Task 3 (from: 01 September 2025 to 03 September 2025)\n" +
-                "4. [D][X] Task 4 (by: 01 September 2025)\n" +
-                "------------------------------\n", outContent.toString());
+        assertEquals(
+                "1. [T][ ] Task 1\n" + "2. [T][X] Task 2\n"
+                        + "3. [E][X] Task 3 (from: 01 September 2025 to 03 September 2025)\n"
+                        + "4. [D][X] Task 4 (by: 01 September 2025)\n" + "------------------------------\n",
+                outContent.toString());
     }
 }

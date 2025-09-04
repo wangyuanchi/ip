@@ -71,6 +71,9 @@ public class Shibe {
             case Event.COMMAND:
                 itemList.addItemSilent(new Event(inputArray[1], inputArray[2], Boolean.parseBoolean(inputArray[3]),
                         LocalDate.parse(inputArray[4]), LocalDate.parse(inputArray[5])));
+                break;
+            default:
+
             }
         }
 

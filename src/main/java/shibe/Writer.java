@@ -23,6 +23,9 @@ public class Writer {
      * @param lineArray The array of strings which will be processed.
      */
     public void writeToFileNewLine(List<String> lineArray) throws IOException {
+        assert this.path != null && !this.path.isEmpty() : "File path must not be null or empty";
+        assert this.delimiter != null && !this.delimiter.isEmpty() : "Delimiter must not be null or empty";
+
         FileWriter fw = new FileWriter(this.path, true);
         fw.write(String.join(this.delimiter, lineArray) + "\n");
         fw.close();
@@ -34,6 +37,9 @@ public class Writer {
      * @param id The id of the item.
      */
     public void writeToFileDoItem(String id) throws IOException {
+        assert this.path != null && !this.path.isEmpty() : "File path must not be null or empty";
+        assert this.delimiter != null && !this.delimiter.isEmpty() : "Delimiter must not be null or empty";
+
         List<String> lines = Files.readAllLines(Paths.get(this.path));
         List<String> updatedLines = new ArrayList<>();
 
@@ -56,6 +62,8 @@ public class Writer {
      * @param id The id of the item to remove.
      */
     public void writeToFileDeleteItem(String id) throws IOException {
+        assert this.path != null && !this.path.isEmpty() : "File path must not be null or empty";
+
         List<String> lines = Files.readAllLines(Paths.get(this.path));
         List<String> updatedLines = new ArrayList<>();
 

@@ -96,35 +96,13 @@ public class ItemList {
         // Expected format for writing to file: command,,id,,name,,done,,optional
         switch (command) {
         case Todo.COMMAND:
-            Todo todoItem = Parser.parseToTodo(inputArray);
-            try {
-                writer.writeToFileNewLine(
-                        Arrays.asList("todo", todoItem.getId(), todoItem.getName(), String.valueOf(todoItem.isDone())));
-                return this.addItem(todoItem);
-            } catch (IOException e) {
-                return Ui.formatResponse("Could not write to file!");
-            }
+            return processTodoFromCommand(writer, inputArray);
 
         case Deadline.COMMAND:
-            Deadline deadlineItem = Parser.parseToDeadline(inputArray);
-            try {
-                writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getId(), deadlineItem.getName(),
-                        String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()));
-                return this.addItem(deadlineItem);
-            } catch (IOException e) {
-                return Ui.formatResponse("Could not write to file!");
-            }
+            return processDeadlineFromCommand(writer, inputArray);
 
         case Event.COMMAND:
-            Event eventItem = Parser.parseToEvent(inputArray);
-            try {
-                writer.writeToFileNewLine(Arrays.asList("event", eventItem.getId(), eventItem.getName(),
-                        String.valueOf(eventItem.isDone()), eventItem.getStartDate().toString(),
-                        eventItem.getEndDate().toString()));
-                return this.addItem(eventItem);
-            } catch (IOException e) {
-                return Ui.formatResponse("Could not write to file!");
-            }
+            return processEventFromCommand(writer, inputArray);
 
         case "list":
             return this.listItems();
@@ -143,6 +121,42 @@ public class ItemList {
 
         default:
             return Ui.formatResponse("No such command!");
+        }
+    }
+
+    public String processTodoFromCommand(Writer writer, String[] inputArray) throws MissingArgumentException {
+        Todo todoItem = Parser.parseToTodo(inputArray);
+        try {
+            writer.writeToFileNewLine(
+                    Arrays.asList("todo", todoItem.getId(), todoItem.getName(), String.valueOf(todoItem.isDone())));
+            return this.addItem(todoItem);
+        } catch (IOException e) {
+            return Ui.formatResponse("Could not write to file!");
+        }
+    }
+
+    public String processDeadlineFromCommand(Writer writer, String[] inputArray)
+            throws MissingArgumentException, InvalidArgumentException {
+        Deadline deadlineItem = Parser.parseToDeadline(inputArray);
+        try {
+            writer.writeToFileNewLine(Arrays.asList("deadline", deadlineItem.getId(), deadlineItem.getName(),
+                    String.valueOf(deadlineItem.isDone()), deadlineItem.getDate().toString()));
+            return this.addItem(deadlineItem);
+        } catch (IOException e) {
+            return Ui.formatResponse("Could not write to file!");
+        }
+    }
+
+    public String processEventFromCommand(Writer writer, String[] inputArray)
+            throws MissingArgumentException, InvalidArgumentException {
+        Event eventItem = Parser.parseToEvent(inputArray);
+        try {
+            writer.writeToFileNewLine(
+                    Arrays.asList("event", eventItem.getId(), eventItem.getName(), String.valueOf(eventItem.isDone()),
+                            eventItem.getStartDate().toString(), eventItem.getEndDate().toString()));
+            return this.addItem(eventItem);
+        } catch (IOException e) {
+            return Ui.formatResponse("Could not write to file!");
         }
     }
 

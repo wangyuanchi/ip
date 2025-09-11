@@ -18,6 +18,8 @@ public class ItemList {
      * @return The information of the added item.
      */
     public String addItem(Item item) {
+        assert item != null : "Item to add should not be null";
+
         this.items.add(item);
         return Ui.formatResponse("I have added the following item:\n" + item);
     }
@@ -29,6 +31,8 @@ public class ItemList {
      * @param item The item to add.
      */
     public void addItemSilent(Item item) {
+        assert item != null : "Item to add should not be null";
+
         this.items.add(item);
     }
 
@@ -38,6 +42,8 @@ public class ItemList {
      * @return The string representation of the item list.
      */
     public String listItems() {
+        assert this.items != null : "Items list should not be null";
+
         if (this.items.isEmpty()) {
             return Ui.formatResponse("No items in this list!");
         }
@@ -60,6 +66,8 @@ public class ItemList {
      * @return The string representation of the items found.
      */
     public String findItems(String itemName) {
+        assert this.items != null : "Items list should not be null";
+
         String output = "";
         for (int i = 0; i < this.items.size(); i++) {
             if (this.items.get(i).getName().contains(itemName)) {
@@ -90,6 +98,8 @@ public class ItemList {
      *                                  command.
      */
     public String runCommand(Writer writer, String input) throws MissingArgumentException, InvalidArgumentException {
+        assert writer != null : "Writer must not be null";
+
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
 
@@ -147,6 +157,8 @@ public class ItemList {
     }
 
     public String findAndDoItem(Writer writer, String itemName) {
+        assert writer != null : "Writer must not be null";
+
         for (Item item : this.items) {
             if (item.getName().equals(itemName) && !item.isDone()) {
                 try {
@@ -164,6 +176,8 @@ public class ItemList {
     }
 
     public String deleteItem(Writer writer, int itemIndex) {
+        assert writer != null : "Writer must not be null";
+
         if (this.items.isEmpty()) {
             return Ui.formatResponse("There is nothing to delete!");
         }

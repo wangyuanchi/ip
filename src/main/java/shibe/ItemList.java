@@ -3,12 +3,20 @@ package shibe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ItemList {
     private ArrayList<Item> items;
+    private HashMap<String, String> shortCommandMap = new HashMap<>();
 
     public ItemList() {
         this.items = new ArrayList<Item>();
+        this.shortCommandMap.put("t", Todo.COMMAND);
+        this.shortCommandMap.put("dl", Deadline.COMMAND);
+        this.shortCommandMap.put("e", Event.COMMAND);
+        this.shortCommandMap.put("l", "list");
+        this.shortCommandMap.put("f", "find");
+        this.shortCommandMap.put("d", "delete");
     }
 
     /**
@@ -102,6 +110,10 @@ public class ItemList {
 
         String[] inputArray = input.split(" ", 2);
         String command = inputArray[0].toLowerCase();
+
+        if (this.shortCommandMap.containsKey(command)) {
+            command = shortCommandMap.get(command);
+        }
 
         // Expected format for writing to file: command,,id,,name,,done,,optional
         switch (command) {

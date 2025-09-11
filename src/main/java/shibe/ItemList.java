@@ -46,7 +46,7 @@ public class ItemList {
 
     /**
      * Lists all items in the item list with 1-based indexing.
-     * 
+     *
      * @return The string representation of the item list.
      */
     public String listItems() {
@@ -201,6 +201,13 @@ public class ItemList {
         return Ui.formatResponse("The specified item was not found or was already completed.");
     }
 
+    /**
+     * Deletes an item from the item list if it exists based on the item index.
+     *
+     * @param writer    The writer object used to write data to file.
+     * @param itemIndex The index of the item to delete.
+     * @return The response to the command.
+     */
     public String deleteItem(Writer writer, int itemIndex) {
         assert writer != null : "Writer must not be null";
 

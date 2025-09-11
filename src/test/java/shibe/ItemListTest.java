@@ -12,7 +12,7 @@ public class ItemListTest {
         ItemList items = new ItemList();
 
         String res = items.listItems();
-        assertEquals("No items in this list!\n------------------------------\n", res);
+        assertEquals("No items in this list!", res);
     }
 
     @Test
@@ -26,6 +26,6 @@ public class ItemListTest {
         String res = items.listItems();
         assertEquals("1. [T][ ] Task 1\n" + "2. [T][X] Task 2\n"
                 + "3. [E][X] Task 3 (from: 01 September 2025 to 03 September 2025)\n"
-                + "4. [D][X] Task 4 (by: 01 September 2025)\n" + "------------------------------\n", res);
+                + "4. [D][X] Task 4 (by: 01 September 2025)", res);
     }
 }

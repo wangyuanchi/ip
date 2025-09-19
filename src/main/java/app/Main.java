@@ -25,6 +25,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             fxmlLoader.<MainWindow>getController().setShibe(shibe);
+            stage.setTitle("Shibe");
             this.shibe.run();
             fxmlLoader.<MainWindow>getController().displayShibeDialog("Hello!");
             stage.show();

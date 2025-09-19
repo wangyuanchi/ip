@@ -1,5 +1,9 @@
 package shibe;
 
+/**
+ * Represents a todo item. A todo has a name and a completion status, and it
+ * uses the command keyword {@link #COMMAND} in user input.
+ */
 public class Todo extends Item {
     public static final String COMMAND = "todo";
 
@@ -24,6 +28,12 @@ public class Todo extends Item {
         super(id, name, isDone);
     }
 
+    /**
+     * Returns the string representation of the todo, prefixed with [T] to indicate
+     * its type.
+     *
+     * @return The formatted string for display.
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

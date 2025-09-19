@@ -7,10 +7,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper for appending and updating persisted item records in a plain text
+ * file. Uses a configurable path and delimiter to read, write, and modify
+ * lines.
+ */
 public class Writer {
     private String path;
     private String delimiter;
 
+    /**
+     * Creates a Writer configured with the storage path and field delimiter.
+     *
+     * @param path      The path to the storage file.
+     * @param delimiter The delimiter used to join and split fields.
+     */
     public Writer(String path, String delimiter) {
         this.path = path;
         this.delimiter = delimiter;

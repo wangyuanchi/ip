@@ -5,10 +5,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Manages a list of items and provides command handling utilities such as add,
+ * list, find, do, and delete.
+ */
 public class ItemList {
+    /**
+     * The backing store for all items in this list.
+     */
     private ArrayList<Item> items;
+
+    /**
+     * A mapping from short commands to their full command representations.
+     */
     private HashMap<String, String> shortCommandMap = new HashMap<>();
 
+    /**
+     * Creates a new item list and initializes the short command mappings.
+     */
     public ItemList() {
         this.items = new ArrayList<Item>();
         this.shortCommandMap.put("t", Todo.COMMAND);
@@ -146,6 +160,16 @@ public class ItemList {
         }
     }
 
+    /**
+     * Parses a todo command from the input and adds the created item to the list,
+     * also writes the item to file.
+     *
+     * @param writer     The writer used for file operations.
+     * @param inputArray The split user input where index 0 is the command and index
+     *                   1 is the arguments.
+     * @return The response after adding the item.
+     * @throws MissingArgumentException If required arguments are missing.
+     */
     public String processTodoFromCommand(Writer writer, String[] inputArray) throws MissingArgumentException {
         Todo todoItem = Parser.parseToTodo(inputArray);
         try {
@@ -157,6 +181,17 @@ public class ItemList {
         }
     }
 
+    /**
+     * Parses a deadline command from the input and adds the created item to the
+     * list, also writes the item to file.
+     *
+     * @param writer     The writer used for file operations.
+     * @param inputArray The split user input where index 0 is the command and index
+     *                   1 is the arguments.
+     * @return The response after adding the item.
+     * @throws MissingArgumentException If required arguments are missing.
+     * @throws InvalidArgumentException If arguments are present but invalid.
+     */
     public String processDeadlineFromCommand(Writer writer, String[] inputArray)
             throws MissingArgumentException, InvalidArgumentException {
         Deadline deadlineItem = Parser.parseToDeadline(inputArray);
@@ -169,6 +204,17 @@ public class ItemList {
         }
     }
 
+    /**
+     * Parses an event command from the input and adds the created item to the list,
+     * also writes the item to file.
+     *
+     * @param writer     The writer used for file operations.
+     * @param inputArray The split user input where index 0 is the command and index
+     *                   1 is the arguments.
+     * @return The response after adding the item.
+     * @throws MissingArgumentException If required arguments are missing.
+     * @throws InvalidArgumentException If arguments are present but invalid.
+     */
     public String processEventFromCommand(Writer writer, String[] inputArray)
             throws MissingArgumentException, InvalidArgumentException {
         Event eventItem = Parser.parseToEvent(inputArray);
@@ -182,6 +228,14 @@ public class ItemList {
         }
     }
 
+    /**
+     * Finds an item by exact name and marks it as done if it is not already done,
+     * also writes the update to file.
+     *
+     * @param writer   The writer used for file operations.
+     * @param itemName The exact name of the item to complete.
+     * @return The response indicating success or failure.
+     */
     public String findAndDoItem(Writer writer, String itemName) {
         assert writer != null : "Writer must not be null";
 
